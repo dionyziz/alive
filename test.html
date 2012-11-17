@@ -1,0 +1,58 @@
+<html>
+    <head>
+        <script type="text/javascript">
+            var zz = 0;
+            var maxi = 0;
+            var imgs = {};
+            var numloaded = 0;
+            
+            pi = 3.14159265358979;
+            
+            function loaded() {
+                ++numloaded;
+                document.getElementById( 'percentage' ).style.width = ( numloaded / maxi ) * 200 + 'px';
+                if ( numloaded == maxi ) {
+                    document.body.removeChild( document.getElementById( "loading" ) );
+                    Rotate();
+                    return;
+                }
+            }
+
+            i = 0;
+            for ( z = 0 ; z < pi * 2 ; z += 0.1 ) { 
+                imgs[ i ] = new Image();
+                imgs[ i ].src = 'index.php?z=' + z;
+                imgs[ i ].onload = function () {
+                    loaded();
+                };
+                ++i;
+            }
+            maxi = i;
+
+            function Rotate() {
+                zee = document.getElementsByTagName( 'img' );
+                if ( zee.length ) {
+                    document.body.removeChild( document.getElementsByTagName( 'img' )[ 0 ] );
+                }
+                document.body.insertBefore( imgs[ zz ] , document.getElementById( 'copy' ) );
+                ++zz;
+                if ( zz >= maxi ) {
+                    zz = 0;
+                }
+                setTimeout( "Rotate()" , 50 );
+            }
+            // setInterval( 'Rotate()' , 250 );
+        </script>
+    </head>
+    <body style="margin:auto;text-align:center;width:100%;">
+        <div style="text-align:center; vertical-align: middle; margin-top:20px; width:100%; color: #346790; font-size: 120%;" id="loading">
+            Rendering...
+            <div style="width:200px;border:1px solid #005010;text-align:center;height:20px;margin:auto">
+                <div style="width:0px;background-color:#106c27;height:20px" id="percentage"></div>
+            </div>
+        </div>
+        <div id="copy" style="margin:auto; margin-top: 20px; padding-top: 4px; color: #888; width: 400px; border-top: 1px solid #ccc">
+            &copy; 2007 Dionysis "<a href="mailto:dionyziz@deviantart.com" style="color: #656; text-decoration: inherit;">dionyziz</a>" Zindros
+        </div>
+    </body>
+</html>
